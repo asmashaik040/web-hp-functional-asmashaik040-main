@@ -55,7 +55,7 @@ function readAllElements(elements: Element) {
   topLevelElements.forEach((element) => {
     if (!IGNORE_LIST.includes(element.tagName)) {
       if (
-        Array.from(element.children).length < 1 &&
+        Array.from(element.children).length <= 1 &&
         element.textContent !== null &&
         element.textContent.trim() !== ""
       ) {

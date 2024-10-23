@@ -47,7 +47,7 @@ const HoverPlayer: React.FC = () => {
   }, [paragraphHoverInfo])
 
   useEffect(() => {
-    if (!paragraphHoverInfo) {
+    if (!paragraphHoverInfo && !isButtonHovered) {
       setIsBtnHidden(true)
     } else {
       setIsBtnHidden(false);
