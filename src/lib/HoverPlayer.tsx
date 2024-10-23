@@ -60,12 +60,9 @@ const HoverPlayer: React.FC = () => {
     }
   }
 
-  if (!hoveredElementInfo) { return null }
-
-  if (!isBtnHidden) { return null }
-
-  const blockpos = hoveredElementInfo.element.getBoundingClientRect();
-
+  if(!hoveredElementInfo) return null;
+  if (isBtnHidden) return null;
+  const blockpos = (hoveredElementInfo.element.localName === 'blockquote')  && true
   return (
     <PlayButton
       id={blockpos ? 'hover-player' : 'play-icon'}

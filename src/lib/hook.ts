@@ -28,9 +28,9 @@ export function isPointInsideElement(
   const rect = element.getBoundingClientRect();
   if (
     coordinate.x > rect.left &&
-    coordinate.x > rect.right &&
+    coordinate.x < rect.right &&
     coordinate.y > rect.top &&
-    coordinate.y > rect.bottom
+    coordinate.y < rect.bottom
   ) {
     return true;
   }
@@ -42,9 +42,11 @@ export function isPointInsideElement(
  * We will later use this to size the HTML element that contains the hover player
  */
 export function getLineHeightOfFirstLine(element: HTMLElement): number {
-  const inlineElement= element.querySelector('p');
-  if(inlineElement && inlineElement.textContent === element.textContent) {
-    const computedStyle = getComputedStyle(inlineElement); 
+  const inlineElement = element.querySelector(
+    "span, a, em, i, strong, b, u, s, strike, sub, sup, tt, var, cite, code, dfn, kbd, samp, abbr, acronym, big, small, font, label, legend, q, button, input, select, textarea, progress",
+  );
+  if (inlineElement && inlineElement.textContent === element.textContent) {
+    const computedStyle = getComputedStyle(inlineElement);
     return parseFloat(computedStyle.fontSize);
   } else {
     const computedStyle = getComputedStyle(element); 
@@ -100,6 +102,7 @@ export function useHoveredParagraphCoordinate(
         setHoveredElement(null);
       }
     }
+
     window.addEventListener("mousemove", handleMouseMove);
 
     return () => {

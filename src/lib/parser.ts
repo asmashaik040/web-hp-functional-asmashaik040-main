@@ -53,7 +53,7 @@ function readAllElements(elements: Element) {
   const readableElements: Element[] = [];
   const topLevelElements = Array.from(elements.children);
   topLevelElements.forEach((element) => {
-    if (IGNORE_LIST.includes(element.tagName)) {
+    if (!IGNORE_LIST.includes(element.tagName)) {
       if (
         Array.from(element.children).length < 1 &&
         element.textContent !== null &&
