@@ -35,7 +35,7 @@ const PlayButton = (props: React.SVGProps<SVGSVGElement>) => (
 
 const HoverPlayer: React.FC = () => {
 
-  const paragraphHoverInfo = useHoveredParagraphCoordinate(Array.from(document.querySelectorAll('p')));
+  const paragraphHoverInfo = useHoveredParagraphCoordinate(Array.from(document.querySelectorAll('p, blockquote')));
   const [isButtonHovered, setIsButtonHovered] = useState(false);
   const [hoveredElementInfo, setHoveredElementInfo] = useState<HoveredElementInfo | null>(null);
   const [isBtnHidden, setIsBtnHidden] = useState(false);
@@ -47,9 +47,9 @@ const HoverPlayer: React.FC = () => {
   }, [paragraphHoverInfo])
 
   useEffect(() => {
-    if(!paragraphHoverInfo && !isButtonHovered) {
+    if (!paragraphHoverInfo && !isButtonHovered) {
       setIsBtnHidden(true)
-    } else{
+    } else {
       setIsBtnHidden(false);
     }
   }, [paragraphHoverInfo, isButtonHovered])
@@ -60,21 +60,25 @@ const HoverPlayer: React.FC = () => {
     }
   }
 
-  if(!hoveredElementInfo) {return null}
+  if (!hoveredElementInfo) { return null }
 
-  if(!isBtnHidden) {return null}
+  if (!isBtnHidden) { return null }
+
+  const blockpos = hoveredElementInfo.element.getBoundingClientRect();
 
   return (
-    <PlayButton 
+    <PlayButton
+      id={blockpos ? 'hover-player' : 'play-icon'}
       style={{
         position: 'fixed',
+        left: blockpos ? `${hoveredElementInfo.left - 35}px` : '30px',
         top: `${hoveredElementInfo?.top}px`,
         cursor: 'pointer',
         background: 'blue',
         borderRadius: '50%',
         padding: '7px'
       }}
-    onClick={handlePlay}
+      onClick={handlePlay}
       onMouseEnter={() => { setIsButtonHovered(true) }}
       onMouseLeave={() => { setIsButtonHovered(false) }} />
   )
